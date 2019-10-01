@@ -1,5 +1,4 @@
-const employees = [
-  {
+const employees = [{
     name: 'Atticus',
     employeeNumber: '2405',
     annualSalary: '47000',
@@ -40,4 +39,47 @@ const employees = [
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
-console.log( employees );
+for (let i = 0; i < employees.length; i++) {
+  console.log(bonusCalculator(employees[i]))
+};
+
+function bonusCalculator(employee) {
+  let percentage;
+  let totalComp;
+  let bonusAmount;
+
+  if (employee.reviewRating <= 2) {
+    percentage = 0;
+  } else if (employee.reviewRating == 3) {
+    percentage = 4;
+  } else if (employee.reviewRating == 4) {
+    percentage = 6;
+  } else {
+    percentage = 10;
+  }
+
+  if (employee.employeeNumber.length == 4) {
+    percentage += 5;
+  }
+
+  if (employee.annualSalary > 65000) {
+    percentage -= 1;
+  }
+
+  if (percentage > 13) {
+    percentage = 13;
+  } else if (percentage < 0) {
+    percentage = 0;
+  }
+
+  bonusAmount = Math.round(percentage * employee.annualSalary * .01);
+  totalComp = bonusAmount + Number(employee.annualSalary);
+
+  let output = {
+    name: employee.name,
+    bonusPercentage: percentage,
+    totalCompensation: totalComp,
+    totalBonus: bonusAmount
+  }
+  return output;
+}
